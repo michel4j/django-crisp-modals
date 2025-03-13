@@ -11,8 +11,8 @@ packages = [
 ]
 requires-python = ">=3.10"
 dependencies = [
-    "django>=4.2",
     "django-crispy-forms>=2.3",
+    "django (>=4.2,<6.0.0)",
 ]
 classifiers = [
     "Environment :: Web Environment",
