@@ -1,0 +1,32 @@
+{% extends "crisp_modals/modal.html" %}
+
+{% load msgs %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block modal_assets %}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2-bootstrap-5-theme@1.3.0/dist/select2-bootstrap-5-theme.min.css" />
+
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.3.0/jquery.form.min.js"
+            integrity="sha512-YUkaLm+KJ5lQXDBdqBqk7EVhJAdxRnVdT2vtCzwPHSweCzyMgYV/tgGF4/dCyqtCC2eCphz0lRQgatGVdfR0ww=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+{% endblock %}
+
+{% block modal_styles %}{% endblock %}
+{% block modal_title %}{{ form.body.title }}{% endblock %}
+{% block pre_content %}<form action="{{ form.body.form_action }}" method="{{form.body.method}}">{% endblock %}
+{% block modal_body %}
+    {% if form.errors %}
+        <div id="form-errors" class="alert alert-warning">
+            <strong>It looks like there's a problem!</strong> Please correct the errors below.
+            <hr class="my-2"/>
+            <small>{{ form.errors }}</small>
+        </div>
+    {% endif %}
+    {% crispy form form.body %}
+{% endblock %}
+{% block modal_footer %}{% crispy form form.footer %}{% endblock %}
+{% block post_content %}</form>{% endblock %}
