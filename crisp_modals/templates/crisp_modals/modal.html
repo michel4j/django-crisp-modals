@@ -3,13 +3,12 @@
 
 <!-- Modal -->
 {% block modal_assets %}{% endblock %}
-<script src="{% static 'crisp_modals/modal.min.js' %}"></script>
 <div class="modal fade {% block modal_classes %}{% endblock %}" id="modal" tabindex="-1" role="dialog"
      aria-labelledby="modal-title" aria-hidden="true">
     <div class="modal-dialog {% block modal_styles %}{% endblock %}">
         <div class="modal-content">
             {% block pre_content %}{% endblock %}
-            <div class="modal-header">
+            <div class="modal-header py-2 bg-primary-subtle">
                 {% block modal_title_tools %}{% endblock %}
                 <div class="modal-title" id="modal-title">{% block modal_title %}{% endblock %}</div>
                 <div class="modal-subtitle text-muted">{% block modal_subtitle %}{% endblock %}</div>

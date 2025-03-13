@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.http import JsonResponse, HttpResponse, HttpRequest
+from django.views.generic import UpdateView, CreateView
 
 
 def is_ajax(request: HttpRequest) -> bool:
@@ -42,4 +43,18 @@ class AjaxFormMixin:
             return JsonResponse(data, safe=False)
         else:
             return response
+
+
+class ModalUpdateView(AjaxFormMixin, UpdateView):
+    """
+    UpdateView that returns a JsonResponse if the request is AJAX.
+    """
+    template_name = 'crisp_modals/form.html'
+
+
+class ModalCreateView(AjaxFormMixin, CreateView):
+    """
+    CreateView that returns a JsonResponse if the request is AJAX.
+    """
+    template_name = 'crisp_modals/form.html'
 

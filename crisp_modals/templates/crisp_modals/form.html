@@ -1,6 +1,5 @@
 {% extends "crisp_modals/modal.html" %}
 
-{% load msgs %}
 {% load static %}
 {% load crispy_forms_tags %}
 
@@ -16,7 +15,7 @@
 {% endblock %}
 
 {% block modal_styles %}{% endblock %}
-{% block modal_title %}{{ form.body.title }}{% endblock %}
+{% block modal_title %}<h3 class="my-0">{{ form.body.title }}</h3>{% endblock %}
 {% block pre_content %}<form action="{{ form.body.form_action }}" method="{{form.body.method}}">{% endblock %}
 {% block modal_body %}
     {% if form.errors %}

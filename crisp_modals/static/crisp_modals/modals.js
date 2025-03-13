@@ -22,36 +22,6 @@
         let defaults = {
             url: $(this).data('form-action'),
             setup: function (body) {
-                body.find(".select").select2({theme: 'bootstrap-5'});
-                body.find("select[data-update-on]").each(function(){
-                    let src = $('[name="'+ $(this).data('update-on')+'"]');
-                    let dst = $(this);
-                    let initial = dst.find('option:selected').val();
-                    let url_template = dst.data('update-url');
-
-                    src.change(function(){
-                        if (src.val()) {
-                            let url = url_template.replace(/\d+/, src.val());
-                            $.ajax({
-                                url: url,
-                                dataType: 'json',
-                                success: function (response) {
-                                    let new_options = response;
-                                    dst.empty();
-                                    $.each(new_options, function(i, item) {
-                                        dst.append($('<option>', {
-                                                value : item[0],
-                                                text: item[1],
-                                                selected: (initial === item[0])
-                                            })
-                                        );
-                                    });
-                                    dst.trigger('change.select2');
-                                }
-                            });
-                        }
-                    });
-                });
             },
             complete: function(data) {
                 if (data.url) {
@@ -74,10 +44,8 @@
             success: function(response) {
                 target.html(response);
                 settings.setup(target);
-                target.find('.modal').modal({backdrop: 'static'});
-                target.find('.modal').on('hidden.bs.modal', function(){
-                    target.empty();  // remove contents after hiding
-                });
+                let my_modal = new bootstrap.Modal('#modal', {backdrop: 'static'});
+                my_modal.show();
             }
         });
         target.off("click", ":submit");
@@ -99,7 +67,7 @@
                 url: form.attr('action'),
                 data: {'submit': button.attr('value')},
 			    beforeSend: function(xhr, settings){
-                    xhr.setRequestHeader("X-CSRFToken", $.cookie('csrftoken'));
+                    // xhr.setRequestHeader("X-CSRFToken", $.cookie('csrftoken'));
                 },
                 success: function(data, status, xhr) {
                     let dataType = xhr.getResponseHeader("content-type") || "";
@@ -114,18 +82,22 @@
                         } else {
                             target.html(data);
                             settings.setup(target);
-                            target.find('.modal').modal({backdrop: 'static'});
+                            let my_modal = new bootstrap.Modal('#modal', {backdrop: 'static'});
+                            my_modal.show();
                         }
                     } else if (/json/.test(dataType)) {
-                        target.find('.modal').modal('hide').data('bs.modal', null);
+                        let my_modal = document.getElementById('#modal');
+                        my_modal.hide();
                         settings.complete(data);
                     } else {
-                        target.find('.modal').modal('hide').data('bs.modal', null);
+                        let my_modal = document.getElementById('#modal');
+                        my_modal.hide();
                     }
                 },
                 error: function() {
+                    button.html('<i class="bi-exclamation-diamond"></i>');
                     button.shake();
-                    button.html('<i class="ti ti-alert"></i>');
+
                 }
             })
         });
@@ -142,11 +114,22 @@
             url: url,
             success: function(response) {
                 target.html(response);
-                target.find('.modal').modal({backdrop: 'static'});
-                target.find('.modal').on('hidden.bs.modal', function(){
-                    target.empty();  // remove contents after hiding
-                });
+                let my_modal = new bootstrap.Modal('#modal', {backdrop: 'static'});
+                my_modal.show();
             }
+        });
+    };
+}(jQuery));
+
+
+(function ( $ ) {
+    $.fn.initModal = function () {
+        let target = $(this);
+        $(document).on('click', '[data-modal-url]', function () {
+            target.asyncForm({url: $(this).data('modal-url')});
+        });
+        $(document).on('hidden.bs.modal', '.modal', function(){
+            target.empty();  // remove contents after hiding
         });
     };
 }(jQuery));

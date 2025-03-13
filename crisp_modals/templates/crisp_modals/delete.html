@@ -1,6 +1,5 @@
 {% extends "crisp_modals/form.html" %}
 
-
 {% block modal_title %}Delete?{% endblock %}
 {% block pre_content %}
     <form action="{% if form_action %}{{ form_action }}{% else %}delete/{% endif %}" method="post">
