@@ -44,8 +44,7 @@
             success: function(response) {
                 target.html(response);
                 settings.setup(target);
-                let my_modal = new bootstrap.Modal('#modal', {backdrop: 'static'});
-                my_modal.show();
+                showModal();
             }
         });
         target.off("click", ":submit");
@@ -60,14 +59,15 @@
             }
 
             let button = $(this);
-            button.html('<i class="ti ti-reload spin"></i>');
+            button.html('<i class="bi-arrow-repeat spin"></i>');
 
             form.ajaxSubmit({
                 type: 'post',
                 url: form.attr('action'),
                 data: {'submit': button.attr('value')},
 			    beforeSend: function(xhr, settings){
-                    // xhr.setRequestHeader("X-CSRFToken", $.cookie('csrftoken'));
+                    console.log(settings);
+                    //xhr.setRequestHeader("X-CSRFToken", $.cookie('csrftoken'));
                 },
                 success: function(data, status, xhr) {
                     let dataType = xhr.getResponseHeader("content-type") || "";
@@ -82,22 +82,18 @@
                         } else {
                             target.html(data);
                             settings.setup(target);
-                            let my_modal = new bootstrap.Modal('#modal', {backdrop: 'static'});
-                            my_modal.show();
+                            showModal();
                         }
                     } else if (/json/.test(dataType)) {
-                        let my_modal = document.getElementById('#modal');
-                        my_modal.hide();
+                        hideModal();
                         settings.complete(data);
                     } else {
-                        let my_modal = document.getElementById('#modal');
-                        my_modal.hide();
+                        hideModal();
                     }
                 },
                 error: function() {
                     button.html('<i class="bi-exclamation-diamond"></i>');
                     button.shake();
-
                 }
             })
         });
@@ -114,12 +110,12 @@
             url: url,
             success: function(response) {
                 target.html(response);
-                let my_modal = new bootstrap.Modal('#modal', {backdrop: 'static'});
-                my_modal.show();
+                showModal();
             }
         });
     };
 }(jQuery));
+
 
 
 (function ( $ ) {
@@ -133,3 +129,15 @@
         });
     };
 }(jQuery));
+
+
+function hideModal() {
+    let myModalEl = document.getElementById('modal');
+    let modal = bootstrap.Modal.getInstance(myModalEl)
+    modal.hide();
+}
+
+function showModal() {
+    let my_modal = new bootstrap.Modal('#modal', {backdrop: 'static'});
+    my_modal.show();
+}

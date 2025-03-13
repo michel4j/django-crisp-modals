@@ -31,5 +31,8 @@ class Person(models.Model):
     type = models.CharField(max_length=5, choices=Type.choices, default=Type.USER)
     institution = models.ForeignKey(Institution, related_name='people', on_delete=models.PROTECT)
 
+    class Meta:
+        ordering = ['last_name', 'first_name']
+
     def __str__(self):
         return f"{self.first_name} {self.last_name}"

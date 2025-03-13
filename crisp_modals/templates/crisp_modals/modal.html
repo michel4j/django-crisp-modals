@@ -2,6 +2,13 @@
 
 
 <!-- Modal -->
+    <style>
+    @keyframes spin{
+        0% {transform:rotate(0deg)}
+        100% {transform:rotate(359deg)}
+    }
+    .spin{  animation:spin 2s infinite linear }
+    </style>
 {% block modal_assets %}{% endblock %}
 <div class="modal fade {% block modal_classes %}{% endblock %}" id="modal" tabindex="-1" role="dialog"
      aria-labelledby="modal-title" aria-hidden="true">
