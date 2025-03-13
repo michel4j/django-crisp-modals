@@ -66,7 +66,6 @@
                 url: form.attr('action'),
                 data: {'submit': button.attr('value')},
 			    beforeSend: function(xhr, settings){
-                    console.log(settings);
                     //xhr.setRequestHeader("X-CSRFToken", $.cookie('csrftoken'));
                 },
                 success: function(data, status, xhr) {
@@ -115,7 +114,6 @@
         });
     };
 }(jQuery));
-
 
 
 (function ( $ ) {
