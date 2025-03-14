@@ -40,6 +40,9 @@ build-backend = "poetry_dynamic_versioning.backend"
 
 [tool.poetry]
 version = "0.0.0"
+packages = [
+    { include = "crisp_modals", from = "." },
+]
 
 [tool.poetry.requires-plugins]
 poetry-dynamic-versioning = { version = ">=1.0.0,<2.0.0", extras = ["plugin"] }
@@ -48,3 +51,5 @@ poetry-dynamic-versioning = { version = ">=1.0.0,<2.0.0", extras = ["plugin"] }
 enable = true
 vcs = "git"
 format = "{base}.{revision}{distance}"
+
+
