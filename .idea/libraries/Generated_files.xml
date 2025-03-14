@@ -6,7 +6,7 @@
       </sourceFilesUrls>
     </properties>
     <CLASSES>
-      <root url="file://$PROJECT_DIR$/crisp_modals/static/crisp_modals/modals.min.js" />
+      <root url="file://$PROJECT_DIR$/django_crisp_modals/static/django_crisp_modals/modals.min.js" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

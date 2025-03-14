@@ -40,7 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'crispy_forms',
     'crispy_bootstrap5',
-    'crisp_modals',
+    'django_crisp_modals',
     'demo.example',
 ]
 

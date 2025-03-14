@@ -2,7 +2,7 @@ from django.forms import Textarea
 from django.forms.widgets import CheckboxSelectMultiple
 from django.urls import reverse
 
-from crisp_modals.forms import ModalModelForm, HalfWidth, FullWidth, Row, ThirdWidth
+from django_crisp_modals.forms import ModalModelForm, HalfWidth, FullWidth, Row, ThirdWidth
 from . import models
 
 

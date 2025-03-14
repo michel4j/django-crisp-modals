@@ -1,6 +1,6 @@
 from django.urls import reverse
 from django.views.generic import ListView, TemplateView
-from crisp_modals.views import ModalUpdateView, ModalCreateView, ModalDeleteView
+from django_crisp_modals.views import ModalUpdateView, ModalCreateView, ModalDeleteView
 from demo.example.forms import PersonForm, InstitutionForm, SubjectForm
 from demo.example.models import Person, Institution, Subject
 

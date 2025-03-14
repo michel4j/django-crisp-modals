@@ -59,14 +59,14 @@ class ModalUpdateView(AjaxFormMixin, UpdateView):
     """
     UpdateView that returns a JsonResponse if the request is AJAX.
     """
-    template_name = 'crisp_modals/form.html'
+    template_name = 'django_crisp_modals/form.html'
 
 
 class ModalCreateView(AjaxFormMixin, CreateView):
     """
     CreateView that returns a JsonResponse if the request is AJAX.
     """
-    template_name = 'crisp_modals/form.html'
+    template_name = 'django_crisp_modals/form.html'
 
 
 class ModalDeleteView(AjaxFormMixin, DeleteView):
@@ -74,7 +74,7 @@ class ModalDeleteView(AjaxFormMixin, DeleteView):
     Sub-classes should implement 'confirmed' method
     """
 
-    template_name = 'crisp_modals/delete.html'
+    template_name = 'django_crisp_modals/delete.html'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

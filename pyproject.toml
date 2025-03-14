@@ -6,9 +6,6 @@ authors = [
 ]
 readme = "README.md"
 license = "MIT"
-packages = [
-    { include = "crisp_modals", from = "." }
-]
 requires-python = ">=3.10"
 dependencies = [
     "django-crispy-forms>=2.3",
