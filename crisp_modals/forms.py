@@ -1,7 +1,8 @@
-from crispy_forms.bootstrap import StrictButton, AppendedText
+from crispy_forms.bootstrap import StrictButton, AppendedText, InlineCheckboxes
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Div, Layout
 from django import forms
+from django.urls import reverse
 from django.utils.safestring import mark_safe
 
 
@@ -63,20 +64,30 @@ class BodyHelper(FormHelper):
 
 
 class FooterHelper(BodyHelper):
-    def __init__(self, form):
+    def __init__(self, form, delete_url=None):
         super().__init__(form)
-        #self.disable_csrf = True
-        self.append(
+        buttons = []
+        if delete_url:
+            buttons.append(
+                Button('Delete', id="delete-object", style="btn-danger mr-auto", data_modal_url=delete_url)
+            )
+        buttons.extend([
             Button('Revert', type='reset', value='Reset', style="btn-secondary"),
             Button('Save', type='submit', name='submit', value='submit', style='btn-primary'),
-        )
+        ])
+        self.append(*buttons)
 
 
 class ModalModelForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
+        self.delete_url = kwargs.pop('delete_url', None)
         super().__init__(*args, **kwargs)
         self.body = BodyHelper(self)
-        self.footer = FooterHelper(self)
+        self.footer = FooterHelper(self, delete_url=self.delete_url)
+        if self.instance.pk:
+            self.body.title = f'Edit {self.instance.__class__.__name__}'
+        else:
+            self.body.title = f'Add {self.Meta.model.__name__}'
 
 
 class ModalForm(forms.Form):

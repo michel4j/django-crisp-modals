@@ -136,6 +136,8 @@ function hideModal() {
 }
 
 function showModal() {
-    let my_modal = new bootstrap.Modal('#modal', {backdrop: 'static'});
+    let my_modal = new bootstrap.Modal('#modal');
     my_modal.show();
+    $('#modal').removeAttr('inert');
+
 }

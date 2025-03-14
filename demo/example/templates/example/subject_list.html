@@ -1,18 +1,18 @@
 {% extends "base.html" %}
 
-{% block page-heading %}People{% endblock %}
+{% block page-heading %}Subjects{% endblock %}
 {% block bread-crumbs %}
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="/">Home</a></li>
-            <li class="breadcrumb-item active" aria-current="page">People</li>
+            <li class="breadcrumb-item active" aria-current="page">Subjects</li>
         </ol>
     </nav>
 {% endblock %}
 {% block page-tools %}
-    <a href="#0" data-modal-url="{% url 'person-add' %}" class="d-flex flex-column align-items-center py-3">
+    <a href="#0" data-modal-url="{% url 'subject-add' %}" class="d-flex flex-column align-items-center py-3">
         <i class="bi-plus-circle"></i><br/>
-        <small class="text-muted">Add Person</small>
+        <small class="text-muted">Add Subject</small>
     </a>
 {% endblock %}
 
@@ -20,21 +20,15 @@
     <table class="table table-ruled">
         <thead>
         <tr>
-            <th>First Name</th>
-            <th>Last Name</th>
-            <th>Age</th>
-            <th>Institution</th>
-            <th>Country</th>
+            <th>Name</th>
+            <th>Description</th>
         </tr>
         </thead>
         <tbody>
-        {% for person in object_list %}
+        {% for subject in object_list %}
             <tr>
-                <td><a href="#0" data-modal-url="{% url 'person-edit' pk=person.pk %}">{{ person.first_name }}</a></td>
-                <td>{{ person.last_name }}</td>
-                <td>{{ person.age }}</td>
-                <td>{{ person.institution.name }}</td>
-                <td>{{ person.institution.country }}</td>
+                <td><a href="#0" data-modal-url="{% url 'subject-edit' pk=subject.pk %}">{{ subject.name }}</a></td>
+                <td>{{ subject.description }}</td>
             </tr>
         {% endfor %}
         </tbody>

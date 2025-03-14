@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block page-heading %}
+    Example Application for &mdash; Django Crisp Modals
+{% endblock %}
+
+{% block full %}
+    <p>Three types of objects can be managed: People, Institutions, and Subjects</p>
+    <ul class="list-group list-group-flush">
+        <li class="list-group-item"><a href="{% url 'person-list' %}"><i class="bi-people"></i>&emsp;People</a></li>
+        <li class="list-group-item"><a href="{% url 'institution-list' %}"><i class="bi-buildings"></i>&emsp;Institutions</a></li>
+        <li class="list-group-item"><a href="{% url 'subject-list' %}"><i class="bi-journal-bookmark"></i>&emsp;Subjects</a></li>
+    </ul>
+{% endblock %}
