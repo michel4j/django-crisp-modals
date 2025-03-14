@@ -5,6 +5,7 @@ authors = [
     {name = "Michel Fodje",email = "michel4j@gmail.com"}
 ]
 readme = "README.md"
+homepage = "https://github.com/michel4j/django-crisp-modals"
 license = "MIT"
 requires-python = ">=3.10"
 dependencies = [

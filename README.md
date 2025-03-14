@@ -10,13 +10,13 @@ javascript.
 Quick start
 -----------
 
-1. Add "django_crisp_modals", and "crispy_forms" to your INSTALLED_APPS setting like this::
+1. Add "crisp_modals", and "crispy_forms" to your INSTALLED_APPS setting like this::
     ```python
     INSTALLED_APPS = [
         ...,
         "crispy_forms",
         "crispy_bootstrap5",
-        "django_crisp_modals",
+        "crisp_modals",
     ]
 2. Add the following to your settings.py file::
 
@@ -24,7 +24,7 @@ Quick start
     CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
     CRISPY_TEMPLATE_PACK = "bootstrap5"
 
-3. Include the `django_crisp_modals/modals.min.js` within your base template after jQuery
+3. Include the `crisp_modals/modals.min.js` within your base template after jQuery
    and add a blank modal div to the bottom of the body tag.  The modal div should have the id: `modal-target`. 
    Then initialize the modal target.  For example:
 
@@ -32,7 +32,7 @@ Quick start
     {% load static %}
     ...
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
-    <script src="{% static 'django_crisp_modals/modals.min.js' %}"></script>
+    <script src="{% static 'crisp_modals/modals.min.js' %}"></script>
     <script>
         $(document).ready(function() {
             $('#modal-target').initModal();
@@ -43,7 +43,7 @@ Quick start
    A footer helper is also available as `self.footer`, with submit and reset buttons already included.
    
    ```python
-   from django_crisp_modals.forms import ModalModelForm, Row, FullWidth
+   from crisp_modals.forms import ModalModelForm, Row, FullWidth
 
     class PollForm(ModalModelForm):
          class Meta:
@@ -69,7 +69,7 @@ Quick start
    `delete_url` in the form kwargs for the ModalUpdateView class to show the delete button within the form.
     
     ```python
-    from django_crisp_modals.views import ModalCreateView, ModalUpdateView, ModalDeleteView
+    from crisp_modals.views import ModalCreateView, ModalUpdateView, ModalDeleteView
 
     class PollCreateView(ModalCreateView):
         model = Poll
