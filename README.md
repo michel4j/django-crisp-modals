@@ -11,7 +11,7 @@ Quick start
 -----------
 
 1. Add "django_crisp_modals", and "crispy_forms" to your INSTALLED_APPS setting like this::
-
+    ```python
     INSTALLED_APPS = [
         ...,
         "crispy_forms",
@@ -20,6 +20,7 @@ Quick start
     ]
 2. Add the following to your settings.py file::
 
+    ```python
     CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
     CRISPY_TEMPLATE_PACK = "bootstrap5"
 
