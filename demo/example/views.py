@@ -71,7 +71,6 @@ class DeleteSubject(ModalDeleteView):
     model = Subject
 
 
-
 class HomeView(TemplateView):
     template_name = "example/home.html"
 
