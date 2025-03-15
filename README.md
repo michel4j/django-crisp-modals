@@ -98,8 +98,10 @@ Quick start
     <a href="#0" data-modal-url="{% url 'polls:poll-create' %}" class="modal-link">Create Poll</a>
     <a href="#0" data-modal-url="{% url 'polls:poll-update' pk=poll.pk %}">Update Poll</a>
 
-Note: The `data-modal-url` attribute should contain the url of the view that will render the modal. It doesn't have to 
-return a form. Non-form modal content can be rendered by overriding the `modal_content` block in the modal template
-`crisp_modals/modal.html`.  The following blocks are available for overriding: `modal_header`, `modal_body`, `modal_footer`,
-`modal_scripts`.  The `modal_scripts` block should be used to include any additional javascript required for the modal 
-content.
+> Note: 
+> 
+> The `data-modal-url` attribute should contain the url of the view that will render the modal. It doesn't have to 
+> return a form. Non-form modal content can be rendered by overriding the `modal_content` block in the modal template
+> `crisp_modals/modal.html`.  The following blocks are available for overriding: `modal_header`, `modal_body`, `modal_footer`,
+> `modal_scripts`.  The `modal_scripts` block should be used to include any additional javascript required for the modal 
+> content.
