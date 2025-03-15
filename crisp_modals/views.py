@@ -102,4 +102,5 @@ class ModalDeleteView(AjaxFormMixin, DeleteView):
 
 def delete_format(obj):
     options = obj._meta
-    return mark_safe(f"<strong>{options.verbose_name.title()}</strong>: {obj}")
+    txt = obj.__str__() if 'relationship' not in options.verbose_name.lower() else f'{obj.pk:05d}'
+    return mark_safe(f"{options.verbose_name.title()} &ndash; {txt}")
