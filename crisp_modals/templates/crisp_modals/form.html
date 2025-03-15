@@ -6,7 +6,7 @@
 {% block modal_assets %}{% endblock %}
 
 {% block modal_styles %}{% endblock %}
-{% block modal_title %}<h4 class="my-0">{{ form.body.title }}</h4>{% endblock %}
+{% block modal_title %}{{ form.body.title }}{% endblock %}
 {% block pre_content %}<form action="{{ form.body.form_action }}" method="{{form.body.method}}">{% endblock %}
 {% block modal_body %}
     {% if form.errors %}

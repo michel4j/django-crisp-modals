@@ -14,6 +14,10 @@
     .spin {
         animation: spin 1s linear infinite;
     }
+    .modal-title {
+        font-size: 1.5em;
+        font-weight: 200;
+    }
 </style>
 <div class="modal fade {% block modal_classes %}{% endblock %}" id="modal" tabindex="-1" role="dialog"
      aria-labelledby="modal-title" inert>
@@ -22,7 +26,7 @@
             {% block pre_content %}{% endblock %}
             <div class="modal-header bg-primary-subtle">
                 {% block modal_title_tools %}{% endblock %}
-                <div class="modal-title" id="modal-title">{% block modal_title %}{% endblock %}</div>
+                <div class="modal-title my-0" id="modal-title">{% block modal_title %}{% endblock %}</div>
                 <div class="modal-subtitle text-muted">{% block modal_subtitle %}{% endblock %}</div>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
