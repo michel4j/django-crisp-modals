@@ -81,9 +81,9 @@ class ModalDeleteView(AjaxFormMixin, DeleteView):
         context = super().get_context_data(**kwargs)
         collector = NestedObjects(using=DEFAULT_DB_ALIAS)  # database name
         collector.collect([self.object])
-        context['related'] = collector.nested(delete_format)
+        related = collector.nested(delete_format)
+        context['related'] = [] if len(related) == 1 else related[1]
         context['form_action'] = self.request.path
-        print(context['related'])
         return context
 
     def form_valid(self, form):
@@ -102,5 +102,4 @@ class ModalDeleteView(AjaxFormMixin, DeleteView):
 
 def delete_format(obj):
     options = obj._meta
-    txt = obj.__str__() if 'relationship' not in options.verbose_name.lower() else f'{obj.pk:05d}'
-    return mark_safe(f"{options.verbose_name.title()} &ndash; {txt}")
+    return mark_safe(f"<strong>{options.verbose_name.title()}</strong> &ndash; {obj}")

@@ -38,7 +38,9 @@
                     </script>
                 {% endblock %}
             </div>
-            <div class="modal-footer" id="modal-footer">{% block modal_footer %}{% endblock %}</div>
+            <div class="modal-footer" id="modal-footer">{% block modal_footer %}
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal" aria-label="Close">Close</button>
+            {% endblock %}</div>
             {% block post_content %}{% endblock %}
         </div>
     </div>

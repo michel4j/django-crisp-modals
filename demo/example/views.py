@@ -28,6 +28,11 @@ class EditPerson(ModalUpdateView):
     model = Person
     form_class = PersonForm
 
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs['delete_url'] = reverse('person-delete', kwargs={'pk': self.object.pk})
+        return kwargs
+
 
 class AddPerson(ModalCreateView):
     model = Person

@@ -9,12 +9,15 @@
 {% endblock %}
 
 {% block modal_body %}
-    <p class="lead">Are you sure you want to delete the {{ object|verbose_name }} <strong>"{{object}}"</strong>?</p>
+    <p class="lead">
+        Are you sure you want to delete the {{ object|verbose_name }} <strong>"{{object}}"</strong>{% if related %}
+        and the following related items{% endif %}?
+    </p>
+    {% if related %}
     <div class="alert alert-warning" style="font-size: 0.9em; max-height: 200px; overflow-y: auto;">
-        <h6>Related items will be deleted:</h6>
-        <hr/>
     {{ related|html_list }}
     </div>
+    {% endif %}
     <input type="hidden" name="post" value="yes" />
 {% endblock %}
 {% block modal_footer %}
