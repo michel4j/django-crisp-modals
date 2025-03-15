@@ -4,7 +4,7 @@ django-crisp-modals
 
 django-crisp-modals is a Django app which provides support for ajax Django Crispy Forms
 inside Bootstrap 5 modal dialogs.  The app provides various views, form classes, templates and 
-javascript.
+javascript.  A demo site showcasing an example configuration various features, is available in the repository.
 
 
 Quick start
