@@ -10,9 +10,9 @@
 {% block pre_content %}<form action="{{ form.body.form_action }}" method="{{form.body.method}}">{% endblock %}
 {% block modal_body %}
     {% if form.errors %}
-        <div id="form-errors" class="alert alert-warning">
-            <span class="fs-5 fw-light">It looks like there's a problem!</span>
-            <hr class="my-2"/>
+        <div id="form-errors" class="alert alert-warning p-2">
+            <span class="fs-6 fw-light">It looks like there's a problem!</span>
+            <hr class="my-1"/>
             <small>{{ form.errors }}</small>
         </div>
     {% endif %}
