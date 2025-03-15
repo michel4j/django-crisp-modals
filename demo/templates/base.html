@@ -35,10 +35,6 @@
 </style>
     {% block site_css %}{% endblock %}
     {% block extra_css %}{% endblock %}
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.3.0/jquery.form.min.js"
-            integrity="sha512-YUkaLm+KJ5lQXDBdqBqk7EVhJAdxRnVdT2vtCzwPHSweCzyMgYV/tgGF4/dCyqtCC2eCphz0lRQgatGVdfR0ww=="
-            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
     {% block pre_js %}{% endblock %}
 </head>
 <body class="{% block body_class %}{% endblock %} bg-light p-5">
@@ -58,7 +54,7 @@
                 </div>
             {% endblock %}
             {% block object_status %}{% endblock %}
-            {% block full %}
+            {% block content %}
             {% endblock %}
             </div>
         </div>
@@ -67,7 +63,9 @@
 
     <div id="modal-target"></div>
 {% block post_js %}{% endblock %}
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery-form@4.3.0/dist/jquery.form.min.js"></script>
 <script src="{% static 'django_crisp_modals/modals.min.js' %}"></script>
 {% block extra_js %}{% endblock %}
 <script>

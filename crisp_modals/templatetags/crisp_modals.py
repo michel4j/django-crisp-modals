@@ -9,11 +9,11 @@ def verbose_name(obj):
     return obj._meta.verbose_name
 
 
-def render_list(items):
-    html = '<ul>'
+def render_list(items, root=True):
+    html = '<ul class="list-unstyled">' if root else '<ul>'
     for item in items:
         if isinstance(item, list):
-            html += render_list(item)
+            html += render_list(item, root=False)
         else:
             html += f'<li>{item}</li>'
     html += '</ul>'
