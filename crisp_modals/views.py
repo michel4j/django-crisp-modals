@@ -1,7 +1,8 @@
 from django.contrib.admin.utils import NestedObjects
 from django.db import DEFAULT_DB_ALIAS
 from django.shortcuts import render
-from django.http import JsonResponse, HttpResponse, HttpRequest
+from django.http import JsonResponse, HttpResponse, HttpRequest, HttpResponseRedirect
+from django.utils.safestring import mark_safe
 from django.views.generic import UpdateView, CreateView, DeleteView
 
 
@@ -79,8 +80,10 @@ class ModalDeleteView(AjaxFormMixin, DeleteView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         collector = NestedObjects(using=DEFAULT_DB_ALIAS)  # database name
-        collector.collect([context['object']])  # list of objects. single one won't do
+        collector.collect([self.object])
         context['related'] = collector.nested(delete_format)
+        context['form_action'] = self.request.path
+        print(context['related'])
         return context
 
     def form_valid(self, form):
@@ -90,8 +93,13 @@ class ModalDeleteView(AjaxFormMixin, DeleteView):
         return self.confirmed(self, *args, **kwargs)
 
     def confirmed(self, *args, **kwargs):
-        return HttpResponseRedirect(self.get_success_url())
+        self.object.delete()
+        return JsonResponse({
+            'message': 'Deleted successfully',
+            'url': "."
+        })
 
 
 def delete_format(obj):
-    return f"{obj._meta.verbose_name}: {obj}"
+    options = obj._meta
+    return mark_safe(f"<strong>{options.verbose_name.title()}</strong>: {obj}")

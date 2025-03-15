@@ -24,10 +24,6 @@
     .modal.fade:not(.show) .modal-dialog {
       transform: scale(0.8);
     }
-    @keyframes spin {
-        0% { transform: rotate(0deg); }
-        100% { transform: rotate(360deg); }
-    }
     .page-header {
         border-bottom: 1px solid var(--bs-border-color);
         margin-bottom: 1rem;
@@ -35,9 +31,7 @@
     .pagination .page-link{
         font-size: 0.85rem;
     }
-    .spin {
-        animation: spin 1s linear infinite;
-    }
+
 </style>
     {% block site_css %}{% endblock %}
     {% block extra_css %}{% endblock %}

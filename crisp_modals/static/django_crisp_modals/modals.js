@@ -42,6 +42,7 @@
             type: 'GET',
             url: settings.url,
             success: function(response) {
+                hideModal();
                 target.html(response);
                 settings.setup(target);
                 showModal();
@@ -59,7 +60,7 @@
             }
 
             let button = $(this);
-            button.html('<svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">' +
+            button.html('<svg class="spin" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">' +
                 '<path d="M11.534 7h3.932a.25.25 0 0 1 .192.41l-1.966 2.36a.25.25 0 0 1-.384 0l-1.966-2.36a.25.25 ' +
                 '0 0 1 .192-.41m-11 2h3.932a.25.25 0 0 0 .192-.41L2.692 6.23a.25.25 0 0 0-.384 0L.342 8.59A.25.25 ' +
                 '0 0 0 .534 9"/><path fill-rule="evenodd" d="M8 3c-1.552 0-2.94.707-3.857 1.818a.5.5 ' +
@@ -85,6 +86,7 @@
                             contents.html(new_contents.html());
                             settings.setup(target);
                         } else {
+                            hideModal();
                             target.html(data);
                             settings.setup(target);
                             showModal();
@@ -121,6 +123,7 @@
             type: 'GET',
             url: url,
             success: function(response) {
+                hideModal();
                 target.html(response);
                 showModal();
             }
@@ -144,8 +147,10 @@
 
 function hideModal() {
     let myModalEl = document.getElementById('modal');
-    let modal = bootstrap.Modal.getInstance(myModalEl)
-    modal.hide();
+    if (myModalEl) {
+        let modal = bootstrap.Modal.getInstance(myModalEl);
+        modal.hide();
+    }
 }
 
 function showModal() {

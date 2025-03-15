@@ -1,5 +1,11 @@
-{% extends "crisp_modals/form.html" %}
+{% extends "crisp_modals/modal.html" %}
 {% load crisp_modals %}
+
+{% block modal_assets %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.3.0/jquery.form.min.js"
+            integrity="sha512-YUkaLm+KJ5lQXDBdqBqk7EVhJAdxRnVdT2vtCzwPHSweCzyMgYV/tgGF4/dCyqtCC2eCphz0lRQgatGVdfR0ww=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+{% endblock %}
 
 {% block modal_title %}<h4 class="my-0">Delete {{ object|verbose_name }}?</h4>{% endblock %}
 {% block pre_content %}
@@ -10,15 +16,11 @@
     <h5>Are you sure you want to delete the following {{ object|verbose_name }} <strong>"{{object}}"</strong>?</h5>
     <hr/>
     The following related items will be deleted:
-    <ul>
-        {% for item in related %}
-            <li>{{ item }}</li>
-        {% endfor %}
-    </ul>
+    {{ related|html_list }}
     <input type="hidden" name="post" value="yes" />
 {% endblock %}
 {% block modal_footer %}
-    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" aria-label="Close">Cancel</button>
     <button type="submit" value="Submit" class="btn btn-danger">Yes, I'm sure</button>
 {% endblock %}
 {% block post_content %}
