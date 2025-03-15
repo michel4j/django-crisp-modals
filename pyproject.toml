@@ -34,6 +34,11 @@ classifiers = [
 ]
 dynamic = ["version"]
 
+[project.urls]
+Homepage = "https://github.com/michel4j/django-crisp-modals"
+Issues = "https://github.com/michel4j/django-crisp-modals/issues"
+
+
 [build-system]
 requires = ["poetry-core>=1.0.0", "poetry-dynamic-versioning>=1.0.0,<2.0.0"]
 build-backend = "poetry_dynamic_versioning.backend"
