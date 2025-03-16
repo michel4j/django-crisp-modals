@@ -69,7 +69,7 @@ class FooterHelper(BodyHelper):
         buttons = []
         if delete_url:
             buttons.append(
-                Button('Delete', id="delete-object", style="btn-danger", data_modal_url=delete_url)
+                Button('Delete', id="delete-object", style="btn-danger me-auto", data_modal_url=delete_url)
             )
         buttons.extend([
             Button('Revert', type='reset', value='Reset', style="btn-secondary"),
