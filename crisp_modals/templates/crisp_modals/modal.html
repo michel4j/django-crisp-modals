@@ -1,6 +1,7 @@
 {% load static %}
 
 
+
 <!-- Modal -->
 {% block modal_assets %}{% endblock %}
 <style>
@@ -17,6 +18,20 @@
     .modal-title {
         font-size: 1.5em;
         font-weight: 200;
+    }
+    .modal-alert {
+        display: flex;
+        flex-direction: row;
+        align-items: flex-start;
+        justify-content: flex-start;
+        padding: 1em;
+        margin-bottom: 1em;
+        gap: 1em;
+    }
+    .modal-alert > ul {
+        margin-bottom: 0;
+        padding-left: 0;
+        list-style: none;
     }
 </style>
 <div class="modal fade {% block modal_classes %}{% endblock %}" id="modal" tabindex="-1" role="dialog"
