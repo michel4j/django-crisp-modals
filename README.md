@@ -39,6 +39,9 @@ Quick start
         $(document).ready(function() {
             $('#modal-target').initModal();
         });
+        window.setupModal = function(element) {
+            // Add any additional setup code here to be executed for each modal
+        }
     </script>
    
 4. Create forms as follows. The main crispy-forms helper is available as `self.body` within the forms. 

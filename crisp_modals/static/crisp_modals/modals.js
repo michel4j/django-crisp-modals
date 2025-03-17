@@ -22,6 +22,9 @@
         let defaults = {
             url: $(this).data('form-action'),
             setup: function (body) {
+                if (window.setupModal) {
+                    window.setupModal(body);
+                }
             },
             complete: function(data) {
                 if (data.url) {
