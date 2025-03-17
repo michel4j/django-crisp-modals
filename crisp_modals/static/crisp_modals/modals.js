@@ -17,14 +17,11 @@
 
 
 (function ( $ ) {
-    $.fn.asyncForm = function (options) {
+    $.fn.asyncForm = function (url, options) {
         let target = $(this);
         let defaults = {
-            url: $(this).data('form-action'),
+            url: url || $(this).data('form-action'),
             setup: function (body) {
-                if (window.setupModal) {
-                    window.setupModal(body);
-                }
             },
             complete: function(data) {
                 if (data.url) {
@@ -39,7 +36,6 @@
             }
         };
         let settings = $.extend(defaults, options);
-
         // load form and initialize it
         $.ajax({
             type: 'GET',
@@ -136,10 +132,13 @@
 
 
 (function ( $ ) {
-    $.fn.initModal = function () {
+    $.fn.initModal = function (options = {}) {
         let target = $(this);
-        $(document).on('click', '[data-modal-url]', function () {
-            target.asyncForm({url: $(this).data('modal-url')});
+        const settings = $.extend({
+            attrName: 'data-modal-url'
+        }, options);
+        $(document).on('click', `[${settings.attrName}]`, function () {
+            target.asyncForm($(this).attr(settings.attrName), settings);
         });
         $(document).on('hidden.bs.modal', '.modal', function(){
             target.empty();  // remove contents after hiding
