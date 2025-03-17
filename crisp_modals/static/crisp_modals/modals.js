@@ -22,6 +22,7 @@
         let defaults = {
             url: url || $(this).data('form-action'),
             setup: function (body) {
+                new TomSelect(target, settings);
             },
             complete: function(data) {
                 if (data.url) {
