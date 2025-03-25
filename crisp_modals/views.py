@@ -74,7 +74,7 @@ class ModalDeleteView(AjaxFormMixin, DeleteView):
     """derived from edit.DeleteView to re-use the same get-confirm-post-execute pattern
     Sub-classes should implement 'confirmed' method
     """
-
+    success_url = "."
     template_name = 'crisp_modals/delete.html'
 
     def get_context_data(self, **kwargs):
@@ -96,7 +96,7 @@ class ModalDeleteView(AjaxFormMixin, DeleteView):
         self.object.delete()
         return JsonResponse({
             'message': 'Deleted successfully',
-            'url': "."
+            'url': self.get_success_url(),
         })
 
 
