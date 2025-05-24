@@ -65,6 +65,15 @@ class ModalUpdateView(AjaxFormMixin, UpdateView):
     UpdateView that returns a JsonResponse if the request is AJAX.
     """
     template_name = 'crisp_modals/form.html'
+    delete_url = None
+
+    def get_delete_url(self):
+        """
+        Return the URL to delete the object, if it exists.
+        """
+        if self.delete_url:
+            return self.delete_url
+        return None
 
 
 class ModalCreateView(AjaxFormMixin, CreateView):
