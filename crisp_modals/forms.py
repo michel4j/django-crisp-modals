@@ -7,38 +7,50 @@ from django.utils.safestring import mark_safe
 
 
 class Row(Div):
+    """
+    A row of form widgets.
+    """
     def __init__(self, *args,  style="", **kwargs):
         super().__init__(*args, css_class=f"row {style}", **kwargs)
 
 
 class FillWidth(Div):
+    width_class = "col-auto"
+
     def __init__(self, *args,  style="", **kwargs):
-        super().__init__(*args, css_class=f"col {style}", **kwargs)
+        super().__init__(*args, css_class=f"{self.width_class} {style}", **kwargs)
 
 
-class FullWidth(Div):
-    def __init__(self, *args,  style="", **kwargs):
-        super().__init__(*args, css_class=f"col-12 {style}", **kwargs)
+class FullWidth(FillWidth):
+    width_class = "col-12"
 
 
-class HalfWidth(Div):
-    def __init__(self, *args,  style="", **kwargs):
-        super().__init__(*args, css_class=f"col-6 {style}", **kwargs)
+class HalfWidth(FillWidth):
+    width_class = "col-6"
 
 
-class ThirdWidth(Div):
-    def __init__(self, *args,  style="", **kwargs):
-        super().__init__(*args, css_class=f"col-4 {style}", **kwargs)
+class ThirdWidth(FillWidth):
+    width_class = "col-4"
 
 
-class QuarterWidth(Div):
-    def __init__(self, *args,  style="", **kwargs):
-        super().__init__(*args, css_class=f"col-3 {style}", **kwargs)
+class QuarterWidth(FillWidth):
+    width_class = "col-3"
 
 
-class SixthWidth(Div):
-    def __init__(self, *args,  style="", **kwargs):
-        super().__init__(*args, css_class=f"col-2 {style}", **kwargs)
+class SixthWidth(FillWidth):
+    width_class = "col-2"
+
+
+class TwoThirdWidth(FillWidth):
+    width_class = "col-8"
+
+
+class ThreeQuarterWidth(FillWidth):
+    width_class = "col-9"
+
+
+class FiveSixthWidth(FillWidth):
+    width_class = "col-10"
 
 
 class Button(StrictButton):
@@ -52,6 +64,10 @@ class IconEntry(AppendedText):
 
 
 class BodyHelper(FormHelper):
+    """
+    A crispy form helper for the body of the form.
+    """
+
     def __init__(self, form):
         super().__init__(form)
         self.form_tag = False
@@ -60,10 +76,16 @@ class BodyHelper(FormHelper):
         self.layout = Layout()
 
     def append(self, *args):
+        """
+        Append layout objects to the layout.
+        """
         self.layout.extend(args)
 
 
 class FooterHelper(BodyHelper):
+    """
+    A crispy form helper for the footer of a modal, with action buttons.
+    """
     def __init__(self, form, delete_url=None):
         super().__init__(form)
         buttons = []
@@ -75,10 +97,21 @@ class FooterHelper(BodyHelper):
             Button('Revert', type='reset', value='Reset', style="btn-secondary"),
             Button('Save', type='submit', name='submit', value='submit', style='btn-primary'),
         ])
-        self.append(*buttons)
+        self.set_buttons(*buttons)
+
+    def set_buttons(self, *buttons: Button):
+        """
+        Set the footer buttons for the modal form.
+        :param buttons: Button instances to be added to the footer. Any Crispy layout objects can be added.
+        """
+        self.layout = Layout(*buttons)
 
 
 class ModalModelForm(forms.ModelForm):
+    """
+    A ModelForm that is used in a modal. It uses crispy forms to render the form.
+    """
+
     def __init__(self, *args, **kwargs):
         self.delete_url = kwargs.pop('delete_url', None)
         super().__init__(*args, **kwargs)
@@ -91,6 +124,10 @@ class ModalModelForm(forms.ModelForm):
 
 
 class ModalForm(forms.Form):
+    """
+    A Form that is used in a modal. It uses crispy forms to render the form.
+    """
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.body = BodyHelper(self)
