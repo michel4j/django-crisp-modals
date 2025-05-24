@@ -1,11 +1,13 @@
 from django.contrib.admin.utils import NestedObjects
 from django.db import DEFAULT_DB_ALIAS
-from django.shortcuts import render
-from django.http import JsonResponse, HttpResponse, HttpRequest, HttpResponseRedirect
+from django.http import JsonResponse, HttpRequest
 from django.utils.safestring import mark_safe
 from django.views.generic import UpdateView, CreateView, DeleteView
 from django.views.generic.detail import BaseDetailView
 from django.views.generic.edit import FormMixin
+
+from .forms import ConfirmationForm
+
 
 def is_ajax(request: HttpRequest) -> bool:
     """
@@ -78,6 +80,7 @@ class ModalConfirmView(AjaxFormMixin, FormMixin, BaseDetailView):
     """
     template_name = 'crisp_modals/delete.html'
     success_url = ""
+    form_class = ConfirmationForm
 
     def post(self, request, *args, **kwargs):
         self.object = self.get_object()
@@ -86,11 +89,6 @@ class ModalConfirmView(AjaxFormMixin, FormMixin, BaseDetailView):
             return self.confirmed(*args, **kwargs)
         else:
             return self.form_invalid(form)
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['form_action'] = self.request.path
-        return context
 
     def confirmed(self, *args, **kwargs):
         return JsonResponse({
@@ -113,7 +111,6 @@ class ModalDeleteView(AjaxFormMixin, DeleteView):
         collector.collect([self.object])
         related = collector.nested(delete_format)
         context['related'] = [] if len(related) == 1 else related[1]
-        context['form_action'] = self.request.path
         return context
 
     def form_valid(self, form):

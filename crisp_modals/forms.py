@@ -132,3 +132,19 @@ class ModalForm(forms.Form):
         super().__init__(*args, **kwargs)
         self.body = BodyHelper(self)
         self.footer = FooterHelper(self)
+
+
+class ConfirmationForm(ModalForm):
+    """
+    A Form that is used in a modal to confirm an action. It uses crispy forms to render the form.
+    """
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.body = BodyHelper(self)
+        self.footer = FooterHelper(self)
+        self.body.title = 'Confirmation'
+        self.footer.set_buttons(
+            Button('Cancel', type='button', value='cancel', style="btn-secondary", data_bs_dismiss="modal"),
+            Button("Yes", type='submit', name='confirm', value='confirm', style='btn-danger'),
+        )

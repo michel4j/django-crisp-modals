@@ -1,4 +1,5 @@
 {% extends "crisp_modals/modal.html" %}
+{% load crispy_forms_tags %}
 {% load crisp_modals %}
 
 {% block modal_assets %}{% endblock %}
@@ -13,8 +14,8 @@
 
 {% endblock %}
 {% block modal_footer %}
-    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" aria-label="Close">Cancel</button>
-    <button type="submit" value="Submit" class="btn btn-danger">Yes, I'm sure</button>
+    <button type="button" class="btn btn-secondary" value="cancel" data-bs-dismiss="modal" aria-label="Cancel">Cancel</button>
+    <button type="submit" value="Submit" name="confirm" class="btn btn-danger">Yes, I'm sure</button>
 {% endblock %}
 {% block post_content %}
     {% csrf_token %}
