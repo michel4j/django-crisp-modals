@@ -1,12 +1,7 @@
-{% extends "crisp_modals/modal.html" %}
+{% extends "crisp_modals/confirm.html" %}
 {% load crisp_modals %}
 
-{% block modal_assets %}{% endblock %}
-
 {% block modal_title %}Delete {{ object|verbose_name }}?{% endblock %}
-{% block pre_content %}
-    <form action="{% if form_action %}{{ form_action }}{% endif %}" method="post">
-{% endblock %}
 
 {% block modal_body %}
     <p class="lead">
@@ -18,13 +13,4 @@
     {{ related|html_list }}
     </div>
     {% endif %}
-    <input type="hidden" name="post" value="yes" />
-{% endblock %}
-{% block modal_footer %}
-    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" aria-label="Close">Cancel</button>
-    <button type="submit" value="Submit" class="btn btn-danger">Yes, I'm sure</button>
-{% endblock %}
-{% block post_content %}
-    {% csrf_token %}
-    </form>
 {% endblock %}

@@ -1,0 +1,23 @@
+{% extends "crisp_modals/modal.html" %}
+{% load crisp_modals %}
+
+{% block modal_assets %}{% endblock %}
+
+{% block modal_title %}Confirm Action{% endblock %}
+{% block pre_content %}
+    <form action="{% if form_action %}{{ form_action }}{% endif %}" method="post">
+{% endblock %}
+
+{% block modal_body %}
+    {{ confirmation_message }}
+
+{% endblock %}
+{% block modal_footer %}
+    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" aria-label="Close">Cancel</button>
+    <button type="submit" value="Submit" class="btn btn-danger">Yes, I'm sure</button>
+{% endblock %}
+{% block post_content %}
+    {% csrf_token %}
+    <input type="hidden" name="post" value="yes" />
+    </form>
+{% endblock %}

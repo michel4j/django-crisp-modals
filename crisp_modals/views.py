@@ -7,7 +7,6 @@ from django.views.generic import UpdateView, CreateView, DeleteView
 from django.views.generic.detail import BaseDetailView
 from django.views.generic.edit import FormMixin
 
-
 def is_ajax(request: HttpRequest) -> bool:
     """
     Check if request is an AJAX request, or prefers a JSON response
@@ -74,8 +73,8 @@ class ModalCreateView(AjaxFormMixin, CreateView):
 
 class ModalConfirmView(AjaxFormMixin, FormMixin, BaseDetailView):
     """
-    FormView that returns a JsonResponse if the request is AJAX.
-    This is used to confirm an action (e.g. delete).
+    FormView that presents a confirmation dialog and performs an action
+    on confirmation.
     """
     template_name = 'crisp_modals/delete.html'
     success_url = ""
