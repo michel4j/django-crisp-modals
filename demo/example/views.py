@@ -1,6 +1,6 @@
 from django.urls import reverse
 from django.views.generic import ListView, TemplateView
-from crisp_modals.views import ModalUpdateView, ModalCreateView, ModalDeleteView
+from crisp_modals.views import ModalUpdateView, ModalCreateView, ModalDeleteView, ModalConfirmView
 from demo.example.forms import PersonForm, InstitutionForm, SubjectForm
 from demo.example.models import Person, Institution, Subject
 
@@ -43,6 +43,11 @@ class EditInstitution(ModalUpdateView):
     model = Institution
     form_class = InstitutionForm
 
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs['delete_url'] = reverse('institution-delete', kwargs={'pk': self.object.pk})
+        return kwargs
+
 
 class AddInstitution(ModalCreateView):
     model = Institution
@@ -64,7 +69,7 @@ class AddSubject(ModalCreateView):
     form_class = SubjectForm
 
 
-class DeletePerson(ModalDeleteView):
+class DeletePerson(ModalConfirmView):
     model = Person
 
 

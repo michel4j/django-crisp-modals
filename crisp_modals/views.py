@@ -1,9 +1,10 @@
 from django.contrib.admin.utils import NestedObjects
 from django.db import DEFAULT_DB_ALIAS
+from django.db.models import ProtectedError
 from django.http import JsonResponse, HttpRequest
 from django.utils.safestring import mark_safe
-from django.views.generic import UpdateView, CreateView, DeleteView
-from django.views.generic.detail import BaseDetailView
+from django.views.generic import UpdateView, CreateView, DeleteView, DetailView
+from django.views.generic.detail import SingleObjectTemplateResponseMixin, BaseDetailView
 from django.views.generic.edit import FormMixin
 
 from .forms import ConfirmationForm
@@ -73,14 +74,22 @@ class ModalCreateView(AjaxFormMixin, CreateView):
     template_name = 'crisp_modals/form.html'
 
 
-class ModalConfirmView(AjaxFormMixin, FormMixin, BaseDetailView):
+class ModalConfirmView(AjaxFormMixin, DeleteView):
     """
     FormView that presents a confirmation dialog and performs an action
     on confirmation.
     """
-    template_name = 'crisp_modals/delete.html'
+    template_name = 'crisp_modals/confirm.html'
     success_url = ""
     form_class = ConfirmationForm
+
+    def get_form_kwargs(self):
+        """
+        Return the keyword arguments for instantiating the form.
+        """
+        kwargs = super().get_form_kwargs()
+        kwargs['form_action'] = self.request.path
+        return kwargs
 
     def post(self, request, *args, **kwargs):
         self.object = self.get_object()
@@ -104,6 +113,15 @@ class ModalDeleteView(AjaxFormMixin, DeleteView):
     """
     success_url = "."
     template_name = 'crisp_modals/delete.html'
+    form_class = ConfirmationForm
+
+    def get_form_kwargs(self):
+        """
+        Return the keyword arguments for instantiating the form.
+        """
+        kwargs = super().get_form_kwargs()
+        kwargs['form_action'] = self.request.path
+        return kwargs
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -111,6 +129,7 @@ class ModalDeleteView(AjaxFormMixin, DeleteView):
         collector.collect([self.object])
         related = collector.nested(delete_format)
         context['related'] = [] if len(related) == 1 else related[1]
+        context['protected'] = list(collector.protected)
         return context
 
     def form_valid(self, form):
@@ -120,7 +139,15 @@ class ModalDeleteView(AjaxFormMixin, DeleteView):
         return self.confirmed(self, *args, **kwargs)
 
     def confirmed(self, *args, **kwargs):
-        self.object.delete()
+        try:
+            self.object.delete()
+        except ProtectedError as e:
+            error = 'Cannot delete this object because it is protected by other objects which reference it.'
+            return JsonResponse({
+                'message': error,
+                'error': error,
+            }, status=400)
+
         return JsonResponse({
             'message': 'Deleted successfully',
             'url': self.get_success_url(),

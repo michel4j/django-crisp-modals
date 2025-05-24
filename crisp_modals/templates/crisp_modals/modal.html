@@ -33,6 +33,9 @@
         padding-left: 0;
         list-style: none;
     }
+    #modal-error:empty {
+        display: none;
+    }
 </style>
 <div class="modal fade {% block modal_classes %}{% endblock %}" id="modal" tabindex="-1" role="dialog"
      aria-labelledby="modal-title" inert>
@@ -46,6 +49,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body" id="modal-content">
+                <div id="modal-error" class="modal-alert text-danger-emphasis bg-danger-subtle">{% block modal_error %}{% endblock %}</div>
                 {% block modal_body %}{% endblock %}
                 {% block modal_scripts %}
                     <script>

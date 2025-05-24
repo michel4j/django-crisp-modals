@@ -72,6 +72,7 @@ class BodyHelper(FormHelper):
         super().__init__(form)
         self.form_tag = False
         self.title = 'Form'
+        self.method = 'POST'
         self.form_show_errors = False
         self.layout = Layout()
 
@@ -112,11 +113,12 @@ class ModalModelForm(forms.ModelForm):
     A ModelForm that is used in a modal. It uses crispy forms to render the form.
     """
 
-    def __init__(self, *args, **kwargs):
-        self.delete_url = kwargs.pop('delete_url', None)
+    def __init__(self, *args, delete_url=None, form_action=None, **kwargs):
         super().__init__(*args, **kwargs)
         self.body = BodyHelper(self)
-        self.footer = FooterHelper(self, delete_url=self.delete_url)
+        if form_action:
+            self.body.form_action = form_action
+        self.footer = FooterHelper(self, delete_url=delete_url)
         if self.instance.pk:
             self.body.title = f'Edit {self.instance.__class__.__name__}'
         else:
@@ -128,9 +130,11 @@ class ModalForm(forms.Form):
     A Form that is used in a modal. It uses crispy forms to render the form.
     """
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args, form_action=None, **kwargs):
         super().__init__(*args, **kwargs)
         self.body = BodyHelper(self)
+        if form_action:
+            self.body.form_action = form_action
         self.footer = FooterHelper(self)
 
 
@@ -141,8 +145,6 @@ class ConfirmationForm(ModalForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.body = BodyHelper(self)
-        self.footer = FooterHelper(self)
         self.body.title = 'Confirmation'
         self.footer.set_buttons(
             Button('Cancel', type='button', value='cancel', style="btn-secondary", data_bs_dismiss="modal"),

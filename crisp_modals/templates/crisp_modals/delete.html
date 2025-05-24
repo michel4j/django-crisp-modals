@@ -9,8 +9,20 @@
         and the following related items{% endif %}?
     </p>
     {% if related %}
-    <div class="modal-alert bg-warning-subtle text-warning-emphasis" style="font-size: 0.9em; max-height: 200px; overflow-y: auto;">
-    {{ related|html_list }}
-    </div>
+        <p>The following related items will also be deleted!</p>
+        <div class="modal-alert bg-warning-subtle text-warning-emphasis"
+             style="font-size: 0.9em; max-height: 200px; overflow-y: auto;">
+            {{ related|html_list }}
+        </div>
+    {% endif %}
+    {% if protected %}
+        <p>
+            This {{ object|verbose_name }} cannot be deleted because it is
+            protected by the following related items:
+        </p>
+        <div class="modal-alert bg-danger-subtle text-danger-emphasis"
+             style="font-size: 0.9em; max-height: 200px; overflow-y: auto;">
+            {{ protected|list_objects }}
+        </div>
     {% endif %}
 {% endblock %}
