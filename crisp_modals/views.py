@@ -4,6 +4,8 @@ from django.shortcuts import render
 from django.http import JsonResponse, HttpResponse, HttpRequest, HttpResponseRedirect
 from django.utils.safestring import mark_safe
 from django.views.generic import UpdateView, CreateView, DeleteView
+from django.views.generic.detail import BaseDetailView
+from django.views.generic.edit import FormMixin
 
 
 def is_ajax(request: HttpRequest) -> bool:
@@ -70,9 +72,38 @@ class ModalCreateView(AjaxFormMixin, CreateView):
     template_name = 'crisp_modals/form.html'
 
 
+class ModalConfirmView(AjaxFormMixin, FormMixin, BaseDetailView):
+    """
+    FormView that returns a JsonResponse if the request is AJAX.
+    This is used to confirm an action (e.g. delete).
+    """
+    template_name = 'crisp_modals/delete.html'
+    success_url = ""
+
+    def post(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        form = self.get_form()
+        if form.is_valid():
+            return self.confirmed(*args, **kwargs)
+        else:
+            return self.form_invalid(form)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['form_action'] = self.request.path
+        return context
+
+    def confirmed(self, *args, **kwargs):
+        return JsonResponse({
+            'message': 'Confirmed successfully',
+            'url': self.get_success_url(),
+        })
+
+
 class ModalDeleteView(AjaxFormMixin, DeleteView):
-    """derived from edit.DeleteView to re-use the same get-confirm-post-execute pattern
-    Sub-classes should implement 'confirmed' method
+    """
+    Derived from edit.DeleteView to re-use the same get-confirm-post-execute pattern,
+    Subclasses should implement 'confirmed' method
     """
     success_url = "."
     template_name = 'crisp_modals/delete.html'
