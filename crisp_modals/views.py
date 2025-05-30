@@ -5,7 +5,7 @@ from django.http import JsonResponse, HttpRequest
 from django.utils.safestring import mark_safe
 from django.views.generic import UpdateView, CreateView, DeleteView, DetailView
 from django.views.generic.detail import SingleObjectTemplateResponseMixin, BaseDetailView
-from django.views.generic.edit import FormMixin
+from django.views.generic.edit import FormMixin, FormView
 
 from .forms import ConfirmationForm
 
@@ -62,7 +62,7 @@ class AjaxFormMixin:
 
 class ModalUpdateView(AjaxFormMixin, UpdateView):
     """
-    UpdateView that returns a JsonResponse if the request is AJAX.
+    A Crisp Modal version of UpdateView.
     """
     template_name = 'crisp_modals/form.html'
     delete_url = None
@@ -78,7 +78,14 @@ class ModalUpdateView(AjaxFormMixin, UpdateView):
 
 class ModalCreateView(AjaxFormMixin, CreateView):
     """
-    CreateView that returns a JsonResponse if the request is AJAX.
+    A Crisp Modal version of CreateView.
+    """
+    template_name = 'crisp_modals/form.html'
+
+
+class ModalFormView(AjaxFormMixin, FormView):
+    """
+    A Crisp Modal version of FormView
     """
     template_name = 'crisp_modals/form.html'
 
