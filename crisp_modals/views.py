@@ -76,10 +76,6 @@ class ModalUpdateView(AjaxFormMixin, UpdateView):
         return None
 
 
-class ModalFormView(AjaxFormMixin, FormView):
-    template_name = 'crisp_modals/form.html'
-
-
 class ModalCreateView(AjaxFormMixin, CreateView):
     """
     A Crisp Modal version of CreateView.
