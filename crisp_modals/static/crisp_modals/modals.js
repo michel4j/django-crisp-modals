@@ -31,6 +31,8 @@
                     } else {
                         window.location.replace(data.url);
                     }
+                } else if (data.event) {
+                    $(document).trigger(data.event, data);
                 } else {
                     window.location.reload();
                 }

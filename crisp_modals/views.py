@@ -3,7 +3,7 @@ from django.db import DEFAULT_DB_ALIAS
 from django.db.models import ProtectedError
 from django.http import JsonResponse, HttpRequest
 from django.utils.safestring import mark_safe
-from django.views.generic import UpdateView, CreateView, DeleteView, DetailView
+from django.views.generic import UpdateView, CreateView, DeleteView, DetailView, FormView
 from django.views.generic.detail import SingleObjectTemplateResponseMixin, BaseDetailView
 from django.views.generic.edit import FormMixin, FormView
 
@@ -74,6 +74,10 @@ class ModalUpdateView(AjaxFormMixin, UpdateView):
         if self.delete_url:
             return self.delete_url
         return None
+
+
+class ModalFormView(AjaxFormMixin, FormView):
+    template_name = 'crisp_modals/form.html'
 
 
 class ModalCreateView(AjaxFormMixin, CreateView):
