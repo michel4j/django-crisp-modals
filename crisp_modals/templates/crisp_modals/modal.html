@@ -1,7 +1,5 @@
 {% load static %}
 
-
-
 <!-- Modal -->
 {% block modal_assets %}{% endblock %}
 <style>
@@ -45,7 +43,7 @@
             <div class="modal-header bg-primary-subtle">
                 {% block modal_title_tools %}{% endblock %}
                 <div class="modal-title my-0" id="modal-title">{% block modal_title %}{% endblock %}</div>
-                <div class="modal-subtitle text-muted">{% block modal_subtitle %}{% endblock %}</div>
+                <div class="modal-subtitle text-body-secondary">{% block modal_subtitle %}{% endblock %}</div>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body" id="modal-content">
