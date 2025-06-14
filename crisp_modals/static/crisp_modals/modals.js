@@ -75,7 +75,7 @@
                 url: form.attr('action'),
                 data: {'submit': button.attr('value')},
 			    beforeSend: function(xhr, settings){
-                    //xhr.setRequestHeader("X-CSRFToken", $.cookie('csrftoken'));
+                    xhr.setRequestHeader("X-CSRFToken",$('input[name="csrfmiddlewaretoken"]').val());
                 },
                 success: function(data, status, xhr) {
                     let dataType = xhr.getResponseHeader("content-type") || "";

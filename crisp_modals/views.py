@@ -3,9 +3,8 @@ from django.db import DEFAULT_DB_ALIAS
 from django.db.models import ProtectedError
 from django.http import JsonResponse, HttpRequest
 from django.utils.safestring import mark_safe
-from django.views.generic import UpdateView, CreateView, DeleteView, DetailView, FormView
-from django.views.generic.detail import SingleObjectTemplateResponseMixin, BaseDetailView
-from django.views.generic.edit import FormMixin, FormView
+from django.views.generic import UpdateView, CreateView, DeleteView
+from django.views.generic.edit import FormView
 
 from .forms import ConfirmationForm
 
@@ -31,6 +30,7 @@ class AjaxFormMixin:
     """
     modal_response = False
     success_url = ""
+    ajax_response = True
 
     def get_success_url(self):
         """
@@ -50,7 +50,7 @@ class AjaxFormMixin:
         # it might do some processing (in the case of CreateView, it will
         # call form.save() for example).
         response = super().form_valid(form)
-        if is_ajax(self.request):
+        if self.ajax_response:
             data = {
                 'modal': self.modal_response,
                 'url': self.get_success_url(),
