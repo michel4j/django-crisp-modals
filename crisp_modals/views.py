@@ -33,6 +33,14 @@ class AjaxFormMixin:
     success_url = ""
     ajax_response = True
 
+    def get_form_kwargs(self):
+        """
+        Return the keyword arguments for instantiating the form.
+        """
+        kwargs = super().get_form_kwargs()
+        kwargs['form_action'] = self.request.path
+        return kwargs
+
     def get_success_url(self):
         """
         Return the URL to redirect to after processing the form. Unlike most views, this
@@ -76,6 +84,19 @@ class ModalUpdateView(AjaxFormMixin, UpdateView):
             return self.delete_url
         return None
 
+    def get_success_url(self):
+        if self.success_url:
+            return self.success_url.format(**self.object.__dict__)
+        return super().get_success_url()
+
+    def get_form_kwargs(self):
+        """
+        Return the keyword arguments for instantiating the form.
+        """
+        kwargs = super().get_form_kwargs()
+        kwargs['delete_url'] = self.get_delete_url()
+        return kwargs
+
 
 class ModalCreateView(AjaxFormMixin, CreateView):
     """
@@ -101,15 +122,9 @@ class ModalConfirmView(AjaxFormMixin, SingleObjectTemplateResponseMixin, FormMix
     form_class = ConfirmationForm
 
     def get_success_url(self):
-        return self.success_url.format(**self.object.__dict__)
-
-    def get_form_kwargs(self):
-        """
-        Return the keyword arguments for instantiating the form.
-        """
-        kwargs = super().get_form_kwargs()
-        kwargs['form_action'] = self.request.path
-        return kwargs
+        if self.success_url:
+            return self.success_url.format(**self.object.__dict__)
+        return super().get_success_url()
 
     def post(self, request, *args, **kwargs):
         self.object = self.get_object()
