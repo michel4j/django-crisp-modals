@@ -4,10 +4,10 @@
 
 {% block modal_assets %}{% endblock %}
 
-{% block modal_title %}Confirm Action{% endblock %}
+{% block modal_title %}{{ title }}{% endblock %}
 {% block pre_content %}<form action="{{ form.body.form_action }}" method="post">{% endblock %}
 
-{% block modal_body %}{{ confirmation_message }}{% endblock %}
+{% block modal_body %}{{ message }}{% endblock %}
 {% block modal_footer %}{% crispy form form.footer %}{% endblock %}
 {% block post_content %}
     {% csrf_token %}

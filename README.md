@@ -37,15 +37,19 @@ Quick start
     <script src="{% static 'crisp_modals/modals.min.js' %}"></script>
     <script>
         $(document).ready(function() {
-            $('#modal-target').initModal();
+            $('#modal-target').initModal({
+                setup: function (element) {
+                    // This function is called for each modal that is opened.
+                    // You can add any additional setup code here.
+                    ...
+                }
+            });
         });
-        window.setupModal = function(element) {
-            // Add any additional setup code here to be executed for each modal
-        }
     </script>
    
 4. Create forms as follows. The main crispy-forms helper is available as `self.body` within the forms. 
-   A footer helper is also available as `self.footer`, with submit and reset buttons already included.
+   A footer helper is also available as `self.footer`, with 'submit' and 'reset' buttons already included. To override
+   the footer buttons, you can use the `self.footer.clear()` method to remove the default buttons and then add your own.
    
    ```python
    from crisp_modals.forms import ModalModelForm, Row, FullWidth
@@ -70,7 +74,7 @@ Quick start
             )
         )
 
-5. In your views, use the ModalCreateView, ModalUpdateView, and ModalDeleteView classes as follows. Include
+5. In your views, use the ModalCreateView, ModalUpdateView, ModalConfirmView, and ModalDeleteView classes as follows. Include
    `delete_url` in the form kwargs for the ModalUpdateView class to show the delete button within the form.
     
     ```python
@@ -80,14 +84,30 @@ Quick start
         model = Poll
         form_class = PollForm
 
-    class PollCreateView(ModalUpdateView):
+   
+    class PollEditView(ModalUpdateView):
         model = Poll
         form_class = PollForm
         
-        def get_form_kwargs(self):
-            kwargs = super().get_form_kwargs()
-            kwargs['delete_url'] = reverse('polls:poll-delete', kwargs={'pk': self.object.pk})
-            return kwargs
+        def get_delete_url(self):
+            # If you want to show a delete button in the form, you can return the URL for the delete confirmation view.
+            return reverse('polls:poll-delete', kwargs={'pk': self.object.pk})
+ 
+   
+    class PollConfirView(ModalConfirmView):
+        model = Poll
+        
+        def get_context_data(self):
+            context = super().get_context_data()
+            context['title'] = 'Close Poll'
+            context['message'] = 'Are you sure you want to close this poll?'
+            return context
+   
+        def confirmed(self, *args, **kwargs):
+            # Logic to close the poll
+            self.object.close()  # Assuming the Poll model has a close method
+            return super().confirmed()
+      
    
     class PollDeleteView(ModalDeleteView):
         model = Poll
@@ -106,5 +126,5 @@ Quick start
 > The `data-modal-url` attribute should contain the url of the view that will render the modal. It doesn't have to 
 > return a form. Non-form modal content can be rendered by overriding the `modal_content` block in the modal template
 > `crisp_modals/modal.html`.  The following blocks are available for overriding: `modal_header`, `modal_body`, `modal_footer`,
-> `modal_scripts`.  The `modal_scripts` block should be used to include any additional javascript required for the modal 
-> content.
+> `modal_scripts`.  The `modal_scripts` block should be used to include any additional JavaScript required for the modal 
+> content per-instance. Any code needed for all modals should go in the `initModal` setup option.

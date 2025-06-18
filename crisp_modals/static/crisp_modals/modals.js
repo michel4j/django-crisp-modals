@@ -21,8 +21,8 @@
         let target = $(this);
         let defaults = {
             url: url || $(this).data('form-action'),
-            setup: function (body) {
-                new TomSelect(target, settings);
+            setup: function (element) {
+                // Default setup function, can be overridden
             },
             complete: function(data) {
                 if (data.url) {
@@ -131,8 +131,13 @@
 }(jQuery));
 
 (function ( $ ) {
-    $.fn.loadModal = function (url) {
-        let target = $(this);
+    $.fn.loadModal = function (url, options = {}) {
+        const target = $(this);
+        const settings = $.extend({
+            setup: function (element) {
+                // Default setup function, can be overridden
+            }
+        }, options);
 
         // load form and initialize it
         $.ajax({
@@ -142,6 +147,7 @@
                 hideModal();
                 target.html(response);
                 showModal();
+                settings.setup(target);
             }
         });
     };
@@ -152,7 +158,10 @@
     $.fn.initModal = function (options = {}) {
         let target = $(this);
         const settings = $.extend({
-            attrName: 'data-modal-url'
+            attrName: 'data-modal-url',
+            setup: function (element) {
+                // Default setup function, can be overridden
+            }
         }, options);
         $(document).on('click', `[${settings.attrName}]`, function () {
             target.asyncForm($(this).attr(settings.attrName), settings);

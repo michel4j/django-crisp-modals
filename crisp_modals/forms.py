@@ -74,6 +74,12 @@ class BodyHelper(FormHelper):
         self.title = 'Form'
         self.method = 'POST'
         self.form_show_errors = False
+        self.clear()
+
+    def clear(self):
+        """
+        Clear the layout of the helper.
+        """
         self.layout = Layout()
 
     def append(self, *args):

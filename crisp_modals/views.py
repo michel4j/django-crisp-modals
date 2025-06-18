@@ -114,7 +114,7 @@ class ModalFormView(AjaxFormMixin, FormView):
 
 class ModalConfirmView(AjaxFormMixin, SingleObjectTemplateResponseMixin, FormMixin, BaseDetailView):
     """
-    FormView that presents a confirmation dialog and performs an action
+    A DetailView that presents a confirmation dialog and performs an action
     on confirmation.
     """
     template_name = 'crisp_modals/confirm.html'
@@ -133,6 +133,12 @@ class ModalConfirmView(AjaxFormMixin, SingleObjectTemplateResponseMixin, FormMix
             return self.confirmed(*args, **kwargs)
         else:
             return self.form_invalid(form)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = "Confirm Action"
+        context['message'] = "Are you sure you want to proceed with this action?"
+        return context
 
     def confirmed(self, *args, **kwargs):
         return JsonResponse({
