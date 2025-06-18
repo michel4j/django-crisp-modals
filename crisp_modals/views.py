@@ -4,7 +4,8 @@ from django.db.models import ProtectedError
 from django.http import JsonResponse, HttpRequest
 from django.utils.safestring import mark_safe
 from django.views.generic import UpdateView, CreateView, DeleteView
-from django.views.generic.edit import FormView
+from django.views.generic.detail import SingleObjectTemplateResponseMixin, BaseDetailView
+from django.views.generic.edit import FormView, FormMixin
 
 from .forms import ConfirmationForm
 
@@ -90,7 +91,7 @@ class ModalFormView(AjaxFormMixin, FormView):
     template_name = 'crisp_modals/form.html'
 
 
-class ModalConfirmView(AjaxFormMixin, DeleteView):
+class ModalConfirmView(AjaxFormMixin, SingleObjectTemplateResponseMixin, FormMixin, BaseDetailView):
     """
     FormView that presents a confirmation dialog and performs an action
     on confirmation.
@@ -98,6 +99,9 @@ class ModalConfirmView(AjaxFormMixin, DeleteView):
     template_name = 'crisp_modals/confirm.html'
     success_url = ""
     form_class = ConfirmationForm
+
+    def get_success_url(self):
+        return self.success_url.format(**self.object.__dict__)
 
     def get_form_kwargs(self):
         """
