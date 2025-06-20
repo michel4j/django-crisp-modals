@@ -61,10 +61,6 @@ Quick start
     
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        if self.instance.pk:
-            self.body.form_action = reverse('polls:poll-update', kwargs={'pk': self.instance.pk})
-        else:
-            self.body.form_action = reverse('polls:poll-create')
         self.body.append(
             Row(
                 FullWidth('question', placeholder='Enter your question'),
@@ -75,7 +71,9 @@ Quick start
         )
 
 5. In your views, use the ModalCreateView, ModalUpdateView, ModalConfirmView, and ModalDeleteView classes as follows. Include
-   `delete_url` in the form kwargs for the ModalUpdateView class to show the delete button within the form.
+   `delete_url` in the form kwargs for the ModalUpdateView class to show the delete button within the form. By default,
+    the form will be submitted to the same URL as the view, but you can override this by adding a `form_action` variable 
+    to the form keyword arguments.
     
     ```python
     from crisp_modals.views import ModalCreateView, ModalUpdateView, ModalDeleteView
@@ -89,6 +87,13 @@ Quick start
         model = Poll
         form_class = PollForm
         
+   
+        def get_form_kwargs(self):
+            kwargs = super().get_form_kwargs()
+            # If you want the form submitted to a different url, override the `form_action` variable.
+            kwargs['form_action'] = ...  # e.g., reverse('polls:poll-update', kwargs={'pk': self.object.pk})
+            return kwargs
+   
         def get_delete_url(self):
             # If you want to show a delete button in the form, you can return the URL for the delete confirmation view.
             return reverse('polls:poll-delete', kwargs={'pk': self.object.pk})
