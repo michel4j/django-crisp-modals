@@ -1,4 +1,4 @@
-from django.forms import Textarea
+from django.forms import Textarea, ValidationError
 from django.forms.widgets import CheckboxSelectMultiple
 from django.urls import reverse
 
@@ -31,6 +31,18 @@ class PersonForm(ModalModelForm):
                 FullWidth('bio'),
             )
         )
+
+    def clean_age(self):
+        age = self.cleaned_data.get('age')
+        if age is not None and age < 0:
+            raise ValidationError("Age cannot be negative.")
+        return age
+
+    def clean(self):
+        data = super().clean()
+        if data.get('age', 0) > 20 and data.get('last_name') == 'Doe':
+            raise ValidationError("Persons older than 20 cannot have the last name 'Doe'.")
+        return data
 
 
 class InstitutionForm(ModalModelForm):
