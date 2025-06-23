@@ -20,17 +20,24 @@
     .modal-alert {
         display: flex;
         flex-direction: row;
-        align-items: flex-start;
+        align-items: center;
         justify-content: flex-start;
         padding: 1em;
         margin-bottom: 1em;
         gap: 1em;
     }
-    .modal-alert > ul {
+    .modal-alert > .alert-message {
+        max-width: 90%;
         margin-bottom: 0;
         padding-left: 0;
         list-style: none;
     }
+    .modal-alert > .alert-icon {
+        padding: 0;
+        width: 2em;
+        height: 2em;
+    }
+
     #modal-error:empty {
         display: none;
     }

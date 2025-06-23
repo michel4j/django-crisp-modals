@@ -10,7 +10,7 @@
 {% block pre_content %}
     <form action="{{ form.body.form_action }}" method="{{ form.body.method }}">{% endblock %}
 {% block modal_error %}{% if form.errors %}
-    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" class="text-danger"
+    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" class="alert-icon text-danger"
          viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
          stroke-linejoin="round">
         <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
@@ -21,7 +21,7 @@
         <path d="M12 8v4"/>
         <path d="M12 16h.01"/>
     </svg>
-    <ul class="errorlist">
+    <ul class="alert-message errorlist">
         {% if form.non_field_errors %}
             <li>{{ form.non_field_errors }}</li>
         {% endif %}
