@@ -100,8 +100,8 @@
                         hideModal();
                     }
                 },
-                error: function(data) {
-                    let info = data.responseJSON;
+                error: function(jqXHR, status, error) {
+                    let info = jqXHR.responseJSON || {'error': error};
                     if (info.error) {
                         $("#modal-error").html(
                             '<svg  xmlns="http://www.w3.org/2000/svg"  width="32"  height="32"  viewBox="0 0 24 24"  ' +

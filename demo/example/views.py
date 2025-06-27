@@ -1,3 +1,4 @@
+from django.http import JsonResponse
 from django.urls import reverse
 from django.views.generic import ListView, TemplateView
 from crisp_modals.views import ModalUpdateView, ModalCreateView, ModalDeleteView, ModalConfirmView
@@ -32,6 +33,13 @@ class EditPerson(ModalUpdateView):
         kwargs = super().get_form_kwargs()
         kwargs['delete_url'] = reverse('person-delete', kwargs={'pk': self.object.pk})
         return kwargs
+
+    def form_valid(self, form):
+        # Custom logic before saving the form, if needed
+        if not self.request.user.is_authenticated:
+            return JsonResponse({'error': 'You must be logged in to edit a person.'}, status=403)
+
+        return super().form_valid(form)
 
 
 class AddPerson(ModalCreateView):
