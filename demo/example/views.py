@@ -28,6 +28,7 @@ class SubjectList(ListView):
 class EditPerson(ModalUpdateView):
     model = Person
     form_class = PersonForm
+    size = 'xl'  # Example of setting modal size
 
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
