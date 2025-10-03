@@ -30,6 +30,7 @@ class AjaxFormMixin:
     Must be used with an object-based FormView (e.g. CreateView)
     """
     modal_response = False
+    size = "md"  # Modal size sm, md, lg, xl. Will be prefixed with modal-
     success_url = ""
     ajax_response = True
 
